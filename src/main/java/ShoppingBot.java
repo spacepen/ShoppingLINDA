@@ -3,9 +3,12 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShoppingBot extends TelegramLongPollingBot {
+
+    private List<String> list = new ArrayList<String>();
 
     public void onUpdateReceived(Update update) {
 
@@ -15,9 +18,10 @@ public class ShoppingBot extends TelegramLongPollingBot {
             String response = getResponse(update.getMessage().getText());
 
             if (!response.isEmpty()) {
+
                 SendMessage message = new SendMessage()
                         .setChatId(update.getMessage().getChatId())
-                        .setText(update.getMessage().getText().substring(6));
+                        .setText(response);
 
                 try {
                     execute(message);
@@ -29,10 +33,26 @@ public class ShoppingBot extends TelegramLongPollingBot {
     }
 
     public String getResponse(String message) {
-        if (message.matches("(?i)echo: .*")) {
-            return message.substring(6);
+        if (message.matches("(?i)add: .*")) {
+
+            addToList(message.substring(5));
+            return message.substring(5) + " wurde zur Liste hinzugefügt!";
+
+        } else if (message.matches("show list")){
+
+            return "Liste: " + list;
         }
+
         return "";
+    }
+
+    public List<String> addToList(String message){
+
+        list.add(message);
+        System.out.println("Liste: " + list);
+
+        return list;
+
     }
 
     public String getBotUsername() {
