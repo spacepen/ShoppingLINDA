@@ -41,6 +41,17 @@ public class ShoppingBot extends TelegramLongPollingBot {
         } else if (message.matches("show list")){
 
             return "Liste: " + list;
+
+        } else if (message.matches("delete: .*")){
+
+            deleteFromList(message.substring(8));
+            return message.substring(8) + " wurde von der Liste entfernt!";
+
+        } else if (message.matches("delete list")){
+
+            deleteAll();
+            return "Liste wurde vollständig gelöscht!";
+
         }
 
         return "";
@@ -53,6 +64,23 @@ public class ShoppingBot extends TelegramLongPollingBot {
 
         return list;
 
+    }
+
+    public List<String> deleteFromList(String message){
+
+
+        list.remove(message);
+        System.out.println("Liste: " + list);
+
+        return list;
+    }
+
+    public List<String> deleteAll() {
+
+        list.clear();
+        System.out.println("Liste: " + list);
+
+        return list;
     }
 
     public String getBotUsername() {
