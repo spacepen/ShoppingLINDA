@@ -1,3 +1,4 @@
+
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -9,6 +10,7 @@ import java.util.List;
 public class ShoppingBot extends TelegramLongPollingBot {
 
     private List<String> list = new ArrayList<String>();
+
 
     public void onUpdateReceived(Update update) {
 
@@ -36,16 +38,31 @@ public class ShoppingBot extends TelegramLongPollingBot {
         if (message.matches("(?i)add: .*")) {
 
             addToList(message.substring(5));
-            return message.substring(5) + " wurde zur Liste hinzugefügt!";
+            return message.substring(5) + " wurde zur Liste hinzugefügt! \nListe: " + list;
 
         } else if (message.matches("show list")){
 
-            return "Liste: " + list;
+            if (list.size() < 1){
+
+                return "Deine Liste ist leer!";
+
+            } else {
+
+                return "Liste: " + list;
+            }
 
         } else if (message.matches("delete: .*")){
 
             deleteFromList(message.substring(8));
-            return message.substring(8) + " wurde von der Liste entfernt!";
+
+            if (list.size() < 1){
+
+                return message.substring(8) + " wurde von der Liste entfernt! \nDeine Liste ist leer!";
+
+            } else {
+
+                return message.substring(8) + " wurde von der Liste entfernt! \nListe: " + list;
+            }
 
         } else if (message.matches("delete list")){
 
