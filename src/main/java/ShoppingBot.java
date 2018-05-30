@@ -35,39 +35,47 @@ public class ShoppingBot extends TelegramLongPollingBot {
     }
 
     public String getResponse(String message) {
-        if (message.matches("(?i)add: .*")) {
+        if (message.matches("(?i)/add .*")) {
 
             addToList(message.substring(5));
-            return message.substring(5) + " wurde zur Liste hinzugefügt! \nListe: " + list;
+            return message.substring(5) + " was added to your list! \nYour list: " + list;
 
-        } else if (message.matches("show list")){
-
-            if (list.size() < 1){
-
-                return "Deine Liste ist leer!";
-
-            } else {
-
-                return "Liste: " + list;
-            }
-
-        } else if (message.matches("delete: .*")){
-
-            deleteFromList(message.substring(8));
+        } else if (message.matches("/show")){
 
             if (list.size() < 1){
 
-                return message.substring(8) + " wurde von der Liste entfernt! \nDeine Liste ist leer!";
+                return "Your list is empty!";
 
             } else {
 
-                return message.substring(8) + " wurde von der Liste entfernt! \nListe: " + list;
+                return "Your list: " + list;
             }
 
-        } else if (message.matches("delete list")){
+        } else if (message.matches("/delete .*")){
+
+            if (list.contains(message.substring(8))) {
+
+                deleteFromList(message.substring(8));
+
+                if (list.size() < 1){
+
+                    return message.substring(8) + " was removed from your list! \nYour list is empty!";
+
+                } else {
+
+                    return message.substring(8) + " was removed from your list! \nYour list: " + list;
+                }
+
+            } else {
+
+                return message.substring(8) + " is not an existing item on your current list! \nCheck your list again to see the items it contains!";
+            }
+
+
+        } else if (message.matches("/clear")){
 
             deleteAll();
-            return "Liste wurde vollständig gelöscht!";
+            return "You've successfully deleted your current list! \nFeel free to create a new one!";
 
         }
 

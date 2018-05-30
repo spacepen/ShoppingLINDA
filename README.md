@@ -1,7 +1,8 @@
 # ShoppingLINDA
 Linda?
 
-Yes, Linda, she is a Telegram bot and will help you with your shopping.
+Yes, Linda, she is a Telegram bot which will help you to remember the most important value in today's society.
+Spending money. And to make that happen, you need a list of things to buy. So activate Linda and step into the future of shopping!
 
 
 ### Telegram
@@ -12,10 +13,12 @@ ShoppingLINDA (@shopping_linda_bot)
 
 ### Tags and Communication
 
-/start 
+`/start` - Connect and start engaging with the bot.
 
-/add
+`/add` - Add items to the list.
 
-/clear
+`/delete` - Remove a specific item from the list.
 
-/show
+`/show` - Show all current items on the list.
+
+`/clear` - Remove all items from the list.
