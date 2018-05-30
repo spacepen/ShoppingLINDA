@@ -38,7 +38,7 @@ public class ShoppingBot extends TelegramLongPollingBot {
         if (message.matches("(?i)/add .*")) {
 
             addToList(message.substring(5));
-            return message.substring(5) + " was added to your list! \nYour list: " + list;
+            return message.substring(5) + " was added to your list! \nYour list: " + list.toString().replace("[","").replace("]","");
 
         } else if (message.matches("/show")){
 
@@ -48,7 +48,7 @@ public class ShoppingBot extends TelegramLongPollingBot {
 
             } else {
 
-                return "Your list: " + list;
+                return "Your list: " + list.toString().replace("[","").replace("]","");
             }
 
         } else if (message.matches("/delete .*")){
@@ -63,7 +63,7 @@ public class ShoppingBot extends TelegramLongPollingBot {
 
                 } else {
 
-                    return message.substring(8) + " was removed from your list! \nYour list: " + list;
+                    return message.substring(8) + " was removed from your list! \nYour list: " + list.toString().replace("[","").replace("]","");
                 }
 
             } else {
@@ -85,7 +85,7 @@ public class ShoppingBot extends TelegramLongPollingBot {
     public List<String> addToList(String message){
 
         list.add(message);
-        System.out.println("Liste: " + list);
+        System.out.println("List: " + list);
 
         return list;
 
@@ -95,7 +95,7 @@ public class ShoppingBot extends TelegramLongPollingBot {
 
 
         list.remove(message);
-        System.out.println("Liste: " + list);
+        System.out.println("List: " + list);
 
         return list;
     }
@@ -103,7 +103,7 @@ public class ShoppingBot extends TelegramLongPollingBot {
     public List<String> deleteAll() {
 
         list.clear();
-        System.out.println("Liste: " + list);
+        System.out.println("List: " + list);
 
         return list;
     }
