@@ -11,7 +11,6 @@ public class ShoppingBot extends TelegramLongPollingBot {
 
     private List<String> list = new ArrayList<String>();
 
-
     public void onUpdateReceived(Update update) {
 
         if (update.hasMessage() &&
@@ -23,7 +22,8 @@ public class ShoppingBot extends TelegramLongPollingBot {
 
                 SendMessage message = new SendMessage()
                         .setChatId(update.getMessage().getChatId())
-                        .setText(response);
+                        .setText(response)
+                        .enableMarkdown(true);
 
                 try {
                     execute(message);
@@ -34,11 +34,17 @@ public class ShoppingBot extends TelegramLongPollingBot {
         }
     }
 
+
     public String getResponse(String message) {
+
+
         if (message.matches("(?i)/add .*")) {
 
             addToList(message.substring(5));
-            return message.substring(5) + " was added to your list! \nYour list: " + list.toString().replace("[","").replace("]","");
+            return "_" + message.substring(5) + "_" + " was added to your list! \n\n*Your List:*\n" + list.toString()
+                    .replace("[","")
+                    .replace("]","")
+                    .replace(", ", "\n");
 
         } else if (message.matches("/show")){
 
@@ -48,7 +54,10 @@ public class ShoppingBot extends TelegramLongPollingBot {
 
             } else {
 
-                return "Your list: " + list.toString().replace("[","").replace("]","");
+                return "*Your List:*\n" + list.toString()
+                        .replace("[","")
+                        .replace("]","")
+                        .replace(", ", "\n");
             }
 
         } else if (message.matches("/delete .*")){
@@ -59,28 +68,39 @@ public class ShoppingBot extends TelegramLongPollingBot {
 
                 if (list.size() < 1){
 
-                    return message.substring(8) + " was removed from your list! \nYour list is empty!";
+                    return "_" + message.substring(8) + "_" + " was removed from your list! \nYour list is now empty!";
 
                 } else {
 
-                    return message.substring(8) + " was removed from your list! \nYour list: " + list.toString().replace("[","").replace("]","");
+                    return "_" + message.substring(8) + "_" + " was removed from your list! \n\n*Your list:*\n" + list.toString()
+                            .replace("[","")
+                            .replace("]","")
+                            .replace(", ", "\n");
                 }
 
             } else {
 
-                return message.substring(8) + " is not an existing item on your current list! \nCheck your list again to see the items it contains!";
+                return "_" + message.substring(8) + "_" + " is not an existing item on your current list! \nCheck your list again to see the items it contains!";
             }
 
 
         } else if (message.matches("/clear")){
 
-            deleteAll();
-            return "You've successfully deleted your current list! \nFeel free to create a new one!";
+            if (list.size() < 1){
+
+                return "Your list is already empty!";
+
+            } else {
+
+                deleteAll();
+                return "You've successfully cleared all items from your list! \nFeel free to add new items any time!";
+            }
 
         }
 
         return "";
     }
+
 
     public List<String> addToList(String message){
 
