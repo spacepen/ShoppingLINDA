@@ -38,19 +38,26 @@ public class ShoppingBot extends TelegramLongPollingBot {
     public String getResponse(String message) {
 
 
-        if (message.matches("(?i)/add .*")) {
+        if (message.matches("(?i)/add .*")){
 
-            addToList(message.substring(5));
-            return "_" + message.substring(5) + "_" + " was added to your list! \n\n*Your List:*\n" + list.toString()
-                    .replace("[","")
-                    .replace("]","")
-                    .replace(", ", "\n");
+            if (list.contains(message.substring(5))) {
+
+                return "The item " + "_" + message.substring(5) + "_" + " is already on your list!";
+
+            } else {
+
+                addToList(message.substring(5));
+                return "_" + message.substring(5) + "_" + " was added to your list! \n\n*Your List:*\n" + list.toString()
+                        .replace("[","")
+                        .replace("]","")
+                        .replace(", ", "\n");
+            }
 
         } else if (message.matches("/show")){
 
             if (list.size() < 1){
 
-                return "Your list is empty!";
+                return "There's nothing on your list!";
 
             } else {
 
@@ -62,7 +69,7 @@ public class ShoppingBot extends TelegramLongPollingBot {
 
         } else if (message.matches("/delete .*")){
 
-            if (list.contains(message.substring(8))) {
+            if (list.contains(message.substring(8))){
 
                 deleteFromList(message.substring(8));
 
