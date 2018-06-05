@@ -22,3 +22,5 @@ ShoppingLINDA (@shopping_linda_bot)
 `/show` - Show all current items on the list.
 
 `/clear` - Remove all items from the list.
+
+`/linda` - Show all tags that you can use to interact with this bot.
