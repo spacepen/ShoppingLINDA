@@ -87,7 +87,8 @@ public class ShoppingBot extends TelegramLongPollingBot {
 
             } else {
 
-                return "_" + message.substring(8) + "_" + " is not an existing item on your current list! \nCheck your list again to see the items it contains!";
+                return "_" + message.substring(8) + "_" + " is not an existing item on your current list! " +
+                        "\nCheck your list again to see the items it contains!";
             }
 
 
@@ -103,6 +104,15 @@ public class ShoppingBot extends TelegramLongPollingBot {
                 return "You've successfully cleared all items from your list! \nFeel free to add new items any time!";
             }
 
+        } else if (message.matches("/linda")){
+
+            return "*Hello friend!*" +
+                    "\n\nUse the following tags to interact with me: " +
+                    "\n\n/add - Add items to the list. " +
+                    "\n/delete - Remove a specific item from the list. " +
+                    "\n/show - Show all current items on the list. " +
+                    "\n/clear - Remove all items from the list. " +
+                    "\n/linda - Come back for help.";
         }
 
         return "";
