@@ -115,7 +115,7 @@ public class ShoppingBot extends TelegramLongPollingBot {
                     "\n/linda - Come back for help.";
         }
 
-        return "";
+        return "I don't understand you! Use /linda for help!";
     }
 
 
